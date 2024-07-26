@@ -13,6 +13,7 @@
 
 <input type="button" value="클릭" id="btn">
 <input type="button" value="POST AJAX" id="btn2"><br><br><br>
-<input type="button" value="AJAX Data 응용" id="btn3">
+<input type="button" value="AJAX Data 응용" id="btn3"><br><br><br>
+<input type="button" value="AJAX Data 응용2" id="btn4"><br><br><br>
 </body>
 </html>

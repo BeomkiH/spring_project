@@ -9,6 +9,30 @@ var basket = [
 
 
 $(function(){
+	
+	 $("#btn4").click(function(){
+        var basket = [
+            {"seq":"1", "product":"냉장고", "price":"195000"},
+            {"seq":"2", "product":"세탁기", "price":"287000"},
+            {"seq":"10", "product":"에어프라이어", "price":"97000"}
+        ];
+        
+        $.ajax({
+            url: "./ajaxok4.do",
+            type: "POST",
+            cache: false,
+            dataType: "json", // 서버에서 JSON 형식으로 응답을 받을 예정이므로 "json"으로 설정
+            contentType: "application/json",
+            data: JSON.stringify(basket),
+            success: function(result){
+                console.log(result);
+            },
+            error: function(){
+                console.log("Error::::");
+            }
+        });
+    });
+});
 
 $("#btn3").click(function(){
 	
@@ -34,7 +58,7 @@ $("#btn3").click(function(){
 		
 	});
 	
-});
+
 
 
 

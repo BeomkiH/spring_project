@@ -19,6 +19,35 @@ public class web_Controller {
 
 	PrintWriter pw = null;
 	
+	 @CrossOrigin(origins = "*", allowedHeaders = "*")
+	    @PostMapping("/ajaxok4.do")
+	    public String ajaxok4(@RequestBody String basketData, HttpServletResponse res) throws Exception {
+	        JSONArray basketArray = new JSONArray(basketData);
+	        
+	        for (int i = 0; i < basketArray.length(); i++) {
+	            JSONObject item = basketArray.getJSONObject(i);
+	            System.out.println("Seq: " + item.getString("seq"));
+	            System.out.println("Product: " + item.getString("product"));
+	            System.out.println("Price: " + item.getString("price"));
+	        }
+	        
+	        // Create response JSON object
+	        JSONObject responseJson = new JSONObject();
+	        responseJson.put("result", "OK::::");
+
+	        // Send the response back to client
+	        res.setContentType("application/json");
+	        PrintWriter out = res.getWriter();
+	        out.print(responseJson.toString());
+	        out.flush();
+	        
+	        return null;
+	    }
+	
+	
+	
+	
+	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/ajaxok3.do")
 	public String ajaxok3(@RequestBody String arrData, HttpServletResponse res) throws Exception{
