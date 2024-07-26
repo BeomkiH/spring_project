@@ -3,7 +3,9 @@ package com.shop.www;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,33 +15,63 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 public class web_Controller {
+	
+	@GetMapping("/restApi.do")
+	public String restApi(@SessionAttribute(name="mid", required = false) String mid) throws Exception  {
+		
+		if(mid==null){
+			System.out.println("로그인해야만 결재내역을 확인하실 수 있습니다.");
+		}
+		else {
+			System.out.println("결재내역은 다음과 같습니다.");
+			
+		}
+		return null;
+	}
+	@PostMapping("/loginok.do") 
+	public String loginok(@RequestParam(value="", required = false) String mid,HttpSession session) {
+		if(mid != null || mid != "") {
+		session.setAttribute("mid", mid);
+		session.setMaxInactiveInterval(1800);
+		
+		}
+		
+		return null;
+	}
+	/*
+	 * @PostMapping("/loginok.do") 
+	 * public String loginok(String mid,
+	 * HttpServletRequest req) {
+	 * 
+	 * HttpSession session = req.getSession(); session.setAttribute("mid", mid);
+	 * session.setMaxInactiveInterval(1800); System.out.println(mid); return null; }
+	 */
 
 	PrintWriter pw = null;
 	
-	 @CrossOrigin(origins = "*", allowedHeaders = "*")
+	 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	    @PostMapping("/ajaxok4.do")
 	    public String ajaxok4(@RequestBody String basketData, HttpServletResponse res) throws Exception {
-	        JSONArray basketArray = new JSONArray(basketData);
+	        JSONArray ja = new JSONArray(basketData);
 	        
-	        for (int i = 0; i < basketArray.length(); i++) {
-	            JSONObject item = basketArray.getJSONObject(i);
-	            System.out.println("Seq: " + item.getString("seq"));
-	            System.out.println("Product: " + item.getString("product"));
-	            System.out.println("Price: " + item.getString("price"));
+	        for (int i = 0; i < ja.length(); i++) {
+	            JSONObject jo = ja.getJSONObject(i);
+	            System.out.println("Seq: " + jo.getString("seq"));
+	            System.out.println("Product: " + jo.getString("product"));
+	            System.out.println("Price: " + jo.getString("price"));
 	        }
 	        
-	        // Create response JSON object
 	        JSONObject responseJson = new JSONObject();
 	        responseJson.put("result", "OK::::");
 
-	        // Send the response back to client
-	        res.setContentType("application/json");
-	        PrintWriter out = res.getWriter();
-	        out.print(responseJson.toString());
-	        out.flush();
+	       
+	        this.pw = res.getWriter();
+	        this.pw.print(responseJson.toString());
+	       
 	        
 	        return null;
 	    }

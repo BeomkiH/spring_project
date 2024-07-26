@@ -1,13 +1,4 @@
 
-
-var basket = [
-		{"seq":"1", "product":"냉장고", "price":"195000"},
-		{"seq":"2", "product":"세탁기", "price":"287000"},
-		{"seq":"10", "product":"에어프라이어", "price":"97000"}
-];
-
-
-
 $(function(){
 	
 	 $("#btn4").click(function(){
